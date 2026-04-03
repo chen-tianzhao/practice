@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>闲时絮语：态度与经历，相生共长的成长哲思</title>
+    <style>
+        /* 全局CSS变量 - 亮色/暗色模式 */
+        :root {
+            --bg-primary: linear-gradient(145deg, #f7f3f0 0%, #e9e5e2 100%);
+            --paper-bg: rgba(255, 253, 250, 0.92);
+            --text-primary: #3e3a39;
+            --text-secondary: #5e4b3c;
+            --text-muted: #8f7a6b;
+            --accent: #c9ada7;
+            --accent-dark: #b48c7c;
+            --accent-light: #dbb8ae;
+            --border-color: rgba(255, 245, 235, 0.8);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 5px 12px rgba(0, 0, 0, 0.03);
+            --card-bg: #fffaf7;
+            --quote-bg: #fef7f2;
+            --scrollbar-bg: #e9e5e2;
+            --scrollbar-thumb: #c9ada7;
+        }
+        .dark-mode {
+            --bg-primary: linear-gradient(145deg, #1a1616 0%, #242020 100%);
+            --paper-bg: rgba(30, 26, 26, 0.92);
+            --text-primary: #e0d8d3;
+            --text-secondary: #d4c1b3;
+            --text-muted: #a89588;
+            --accent: #b48c7c;
+            --accent-dark: #c9ada7;
+            --accent-light: #dbb8ae;
+            --border-color: rgba(80, 70, 65, 0.4);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1);
+            --card-bg: rgba(40, 34, 34, 0.8);
+            --quote-bg: rgba(50, 42, 40, 0.8);
+            --scrollbar-bg: #242020;
+            --scrollbar-thumb: #b48c7c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: '微软雅黑', 'PingFang SC', 'Segoe UI', system-ui, sans-serif;
+            transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        body {
+            background: var(--bg-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-primary);
+            position: relative;
+            /* 纸质纹理背景 */
+            background-image: var(--bg-primary), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSJub25lIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiPjwvcmVjdD4KPC9zdmc+');
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            background: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 涟漪特效 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* 加载动画 */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--accent-light);
+            border-top: 3px solid var(--accent-dark);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 顶部工具栏 */
+        .toolbar {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 9999;
+            background: var(--paper-bg);
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .toolbar-btn:hover {
+            background: var(--accent-light);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* 目录导航 */
+        .toc {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--paper-bg);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            z-index: 9998;
+            max-width: 220px;
+            opacity: 0.8;
+        }
+
+        .toc:hover {
+            opacity: 1;
+        }
+
+        .toc-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toc-item {
+            font-size: 13px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toc-item.active, .toc-item:hover {
+            background: var(--accent-light);
+            color: white;
+        }
+
+        /* 阅读进度条 */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            z-index: 9999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent-dark));
+            width: 0%;
+            transition: width 0.2s ease;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 0 10px var(--accent-light);
+        }
+
+        /* 鼠标跟随微光 */
+        .mouse-light {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 173, 167, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: transform 0.1s ease;
+        }
+
+        /* 主体容器 - 轻微浮动效果（替代鼠标晃动） */
+        .paper {
+            max-width: 1000px;
+            margin: 80px auto 80px;
+            background: var(--paper-bg);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            box-shadow: var(--shadow);
+            padding: 45px 55px;
+            position: relative;
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            z-index: 2;
+            /* 新增：纸张轻柔浮动动画 */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 纸张浮动动画 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 标题 */
+        .paper h1 {
+            text-align: center;
+            font-size: 2.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            position: relative;
+            padding-bottom: 18px;
+            font-weight: 500;
+            letter-spacing: -0.3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .paper h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            border-radius: 4px;
+            box-shadow: 0 0 8px var(--accent-light);
+        }
+
+        .sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 45px;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* 章节 - 带编号 */
+        .paper h2 {
+            font-size: 1.65rem;
+            color: var(--text-secondary);
+            margin: 40px 0 18px;
+            padding-left: 18px;
+            border-left: 5px solid var(--accent-light);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            counter-increment: chapter;
+            position: relative;
+        }
+
+        .paper h2::before {
+            content: counter(chapter) ". ";
+            color: var(--accent-dark);
+            font-weight: bold;
+        }
+
+        .paper h2:hover {
+            transform: translateX(6px);
+            color: var(--accent-dark);
+            border-left-color: var(--accent-dark);
+            /* 新增：悬停微光 */
+            text-shadow: 0 0 8px rgba(201, 173, 167, 0.2);
+        }
+
+        .paper p {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+            text-align: justify;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease, text-shadow 0.3s ease;
+        }
+
+        .paper p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 文字悬停微光 */
+        .paper p:hover {
+            text-shadow: 0 0 8px rgba(201, 173, 167, 0.2);
+        }
+
+        /* 引用块 - 升级装饰 */
+        .quote {
+            background: var(--quote-bg);
+            border-left: 6px solid var(--accent-light);
+            padding: 22px 30px;
+            margin: 35px 0;
+            border-radius: 28px;
+            font-style: italic;
+            color: var(--text-secondary);
+            position: relative;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease, text-shadow 0.3s ease;
+        }
+
+        .quote.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote:hover {
+            text-shadow: 0 0 8px rgba(201, 173, 167, 0.2);
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -8px;
+            left: 18px;
+            font-size: 4rem;
+            color: rgba(219, 184, 174, 0.3);
+            font-family: Georgia, serif;
+        }
+
+        .quote::after {
+            content: '"';
+            position: absolute;
+            bottom: -40px;
+            right: 18px;
+            font-size: 4rem;
+            color: rgba(219, 184, 174, 0.3);
+            font-family: Georgia, serif;
+        }
+
+        /* 互动区整体 */
+        .vitality-zone {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 35px;
+            margin-top: 55px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .vitality-zone.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .zone-title {
+            font-size: 1.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .zone-title::before {
+            content: '';
+            width: 8px;
+            height: 28px;
+            background: var(--accent-dark);
+            border-radius: 6px;
+            margin-right: 12px;
+        }
+
+        .zone-sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 统计栏 + 邮箱栏 */
+        .stats-email-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 35px;
+            background: rgba(255, 250, 245, 0.7);
+            padding: 14px 24px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stats-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            background: rgba(255,255,240,0.6);
+            padding: 6px 14px;
+            border-radius: 40px;
+        }
+
+        .stats-icon {
+            font-size: 1.2rem;
+        }
+
+        .like-btn {
+            background: linear-gradient(120deg, var(--accent-light), var(--accent));
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .like-btn:disabled {
+            background: #cfc3bb;
+            cursor: default;
+            transform: none;
+        }
+
+        .like-btn:not(:disabled):hover {
+            transform: scale(1.05);
+            filter: brightness(0.96);
+        }
+
+        /* 点赞粒子容器 */
+        #likeParticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* 邮箱卡片 */
+        .email-card {
+            background: linear-gradient(135deg, #f6ede8, #f2e7e1);
+            padding: 6px 18px 6px 22px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e5d5cb;
+        }
+
+        .email-icon {
+            font-size: 1.2rem;
+        }
+
+        .email-address {
+            color: #7d5f4e;
+            font-family: monospace;
+            letter-spacing: 0.3px;
+        }
+
+        .copy-btn {
+            background: #e2cfc4;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: #5e3e2e;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .copy-btn:hover {
+            background: #d1b9ac;
+            color: white;
+        }
+
+        /* 随机语录 - 打字机效果 */
+        .random-quote {
+            background: var(--card-bg);
+            padding: 22px 28px;
+            border-radius: 32px;
+            margin-bottom: 35px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+        }
+
+        .random-quote:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .random-quote p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .random-quote .quote-author {
+            text-align: right;
+            color: var(--accent-dark);
+            font-size: 0.9rem;
+        }
+
+        /* 投票面板 */
+        .poll-panel {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 32px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-color);
+        }
+
+        .poll-panel h3 {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .poll-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .poll-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px;
+            background: var(--card-bg);
+            border-radius: 60px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 450;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poll-option:hover {
+            background: var(--accent-light);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .poll-option.selected {
+            border-color: var(--accent-dark);
+            background: var(--accent-light);
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .poll-btn {
+            background: linear-gradient(120deg, var(--accent-dark), var(--accent));
+            color: white;
+            padding: 10px 26px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .poll-btn:hover:not(:disabled) {
+            transform: scale(1.01);
+            filter: brightness(0.97);
+        }
+
+        .poll-result {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .result-bar {
+            height: 10px;
+            background: var(--scrollbar-bg);
+            border-radius: 12px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .result-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
+            border-radius: 12px;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0;
+            box-shadow: 0 0 8px var(--accent-light);
+        }
+
+        /* 留言板 */
+        .message-board {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 32px;
+            border: 1px solid var(--border-color);
+        }
+
+        .message-board h3 {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .msg-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .msg-input {
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.2s;
+            background: var(--paper-bg);
+            color: var(--text-primary);
+        }
+
+        .msg-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(200, 162, 145, 0.2);
+        }
+
+        .msg-submit {
+            background: linear-gradient(120deg, var(--accent-light), var(--accent));
+            color: white;
+            padding: 12px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 160px;
+            align-self: flex-end;
+        }
+
+        .msg-submit:hover {
+            transform: scale(1.01);
+            filter: brightness(0.96);
+        }
+
+        .msg-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 6px;
+            /* 自定义滚动条 */
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+        }
+
+        .msg-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .msg-list::-webkit-scrollbar-track {
+            background: var(--scrollbar-bg);
+            border-radius: 10px;
+        }
+
+        .msg-list::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 10px;
+        }
+
+        .msg-item {
+            background: var(--quote-bg);
+            padding: 16px 20px;
+            border-radius: 28px;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .msg-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .msg-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+        }
+
+        .msg-content {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .msg-time {
+            font-size: 0.8rem;
+            color: var(--accent-dark);
+            text-align: right;
+        }
+
+        /* 页脚声明 */
+        .footer-declare {
+            text-align: center;
+            margin-top: 65px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* 返回顶部 - 悬浮动效 */
+        .back2top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-light);
+            color: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 9998;
+        }
+
+        .back2top.active {
+            opacity: 1;
+            visibility: visible;
+            animation: bounce 2s infinite;
+        }
+
+        .back2top:hover {
+            transform: scale(1.05);
+            background: var(--accent-dark);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .paper {
+                padding: 28px 20px;
+                margin: 30px 20px 60px;
+                border-radius: 32px;
+                animation: none; /* 移动端取消浮动，更流畅 */
+            }
+            .paper h1 {
+                font-size: 1.8rem;
+            }
+            .vitality-zone {
+                padding: 20px;
+            }
+            .stats-email-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 32px;
+                padding: 16px;
+            }
+            .poll-options {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .back2top {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .msg-submit {
+                width: 100%;
+                align-self: stretch;
+            }
+            .toolbar {
+                top: 5px;
+                right: 10px;
+                padding: 5px 10px;
+            }
+            .toolbar-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .mouse-light {
+                display: none;
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 计数器重置 */
+        .paper {
+            counter-reset: chapter;
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+        <p>加载闲时絮语中...</p>
+    </div>
+
+    <!-- 鼠标跟随微光 -->
+    <div class="mouse-light" id="mouseLight"></div>
+
+    <!-- 点赞粒子 -->
+    <canvas id="likeParticles"></canvas>
+
+    <!-- 阅读进度条 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+        <button class="toolbar-btn" id="fontDown" title="缩小字体">A-</button>
+        <button class="toolbar-btn" id="fontUp" title="放大字体">A+</button>
+        <button class="toolbar-btn" id="themeToggle" title="切换夜间模式">🌙</button>
+    </div>
+
+    <!-- 文章目录 -->
+    <div class="toc" id="toc">
+        <div class="toc-title">文章目录</div>
+        <ul class="toc-list" id="tocList"></ul>
+    </div>
+
+    <div class="paper hover-3d" id="paper">
+        <h1>闲时絮语：态度与经历，相生共长的成长哲思</h1>
+        <p class="sub">作者：陈天</p>
+        <p class="sub">中学生闲时漫思 · 成长哲悟</p>
+
+        <h2>碎碎念开场：偶然的小思考</h2>
+        <p>“闲敲棋子落花灯”，褪去尘嚣，暂别闲适淡雅的田园意趣，偶念校园日常里的细碎片段，提笔漫书心底所思所感。无关章法，不事雕琢，只为记录一份最本真的成长体悟，诉说一段关于态度与经历的浅淡哲思。</p>
+
+        <h2>日常观察：不一样的反应，不一样的态度</h2>
+        <p>世间百态，皆藏于人心，同一件事，不同人笔下的答卷却截然不同。就说考试失利这桩小事，有人浅叹之后便沉心反思，于错题中捡拾教训，次日便重整旗鼓，以更笃实的姿态奔赴前路，将遗憾酿成前行的力量；亦有人一朝失意便一蹶不振，心灰意冷间疏怠学业，上课走神、作业敷衍，任惰性吞噬初心，终在摆烂中消磨时光。校园活动亦是如此，有人全心投入，于参与中感知美好、收获成长，落幕时仍念意犹未尽；有人则心不在焉，一边抱怨时光虚度、毫无所得，一边闲谈嬉闹、虚度光阴，沦为自身消极态度的囚徒。众生百态，皆在无声诉说着态度与经历的羁绊，二者究竟是怎样的依存关系，引人深思。</p>
+
+        <h2>核心困惑：到底谁决定谁？</h2>
+        <p>这份困惑，久藏我心：究竟是经历塑造了态度，还是态度定义了经历？曾在英语课堂上，老师讲评试卷时，选项给出的答案是“经历决定态度”，彼时我心底便生疑惑：若无亲历，何来态度？这份疑问如一颗种子，在心底悄然生根。是失利的经历催生了消极的心态，还是本就消极的态度，注定了失利的必然？是老师的鼓励与关爱，唤醒了沉睡的积极，还是那份潜藏心底的渴望，让这份温暖的经历有了滋养成长的力量？我反复思忖，在日复一日的观察与体悟中，渐渐探寻到其中的端倪。</p>
+
+        <h2>我的理解：态度和经历，是互相搭伴儿的</h2>
+        <p>曾以为，态度不过是一句简单的“喜欢”或“厌恶”，是心底转瞬即逝的念头，后来才渐渐明白，态度从非空洞的念白，而是藏在一言一行、一举一动中的无声告白。它是面对数学难题时的心境，是盼着攻克难关的热忱，是偶感烦躁时的倦怠，更是主动刷题的坚持与逃避退缩的怯懦，每一种姿态，都藏着态度的印记，也滋养着精神的丰盈。而经历，亦非过往云烟般的匆匆过往，它是带着心境与感悟的生命印记。就如小组讨论，曾以为不过是众人闲谈、虚度光阴，消极应付间从未窥见其深意；直到全心参与，才发觉那是志同道合者的并肩同行，是思维碰撞的火花，是为同一个目标携手奋进的温暖，这份带着温度与思考的过往，才是真正的经历。</p>
+        <p>后来，随着阅读的积淀、认知的拓展，我渐渐懂得，昔日我与老师的看法，皆非全然的真理，不过是看待问题的视角不同，各有偏颇。态度与经历，从非单向的决定与被决定，而是如鸡生蛋、蛋孵鸡般的辩证之态，难分本末，却始终在彼此的羁绊中相互成就、彼此滋养。就像我们面对心中向往之事，往往会被过往失败的经历裹挟，让怯懦的态度困住前行的脚步，最终在犹豫中否定自我，收获一场未启先终的遗憾；可若能挣脱过往的桎梏，以积极笃定的态度奔赴前方，不犹豫、不退缩，便可能步步生花，让每一次前行都成为滋养态度的养分，让积极的心态，铺就顺遂的前路。</p>
+
+        <div class="quote"><p>态度非天生禀赋，经历亦非既定宿命，我们既能被岁月的经历温柔雕琢，亦能以澄澈的态度，将平凡的过往，酿成独属于自己的成长芳华。</p></div>
+
+        <h2>亲身经历：那些被改变的态度</h2>
+        <p>回望自身，亦有诸多被经历重塑态度的瞬间。曾几何时，我对小组讨论满心抵触，总觉得那不过是众人闲谈，难有实质收获，每次皆低头自处，缄默不语，将自己隔绝在集体之外。直到某个数学晚自习，一道解析几何难题如拦路虎般横亘眼前，我独自思索许久，思绪如乱麻般纠缠，心焦如焚却无计可施。就在此时，小组伙伴主动围拢而来，你言我语间，有人提议用坐标法破题，有人点出我遗漏的关键条件，思维的火花在闲谈中碰撞，难题终被携手攻克，更收获了实用的解题技巧。从那以后，我心底的壁垒悄然瓦解，不再逃避小组讨论，反而主动参与其中，乐于分享所思所想。原来，一场真诚的亲历，足以打破固有的偏见，重塑心底的态度。</p>
+        <p>再谈及当众发言，那曾是我深埋心底的怯懦。高一语文课上，老师让我们分享心仪的诗歌，我猝不及防被点名，站起身的那一刻，声音发颤，大脑一片空白，千言万语皆堵在喉头，脸颊灼热至脖颈，最终只能在老师的温柔示意下，窘迫地坐下。彼时我曾暗下决心，此生大抵都无法跨越这份怯懦，再不敢当众发声。后来，在老师的耐心鼓励下，我试着敞开心扉，从最初的结结巴巴、磕磕绊绊，到后来的流畅自如、从容不迫，那份深埋心底的恐惧，在一次次的锻炼中悄然消散。原来，那些我们曾以为无法逾越的鸿沟，那些笃定无法改变的态度，都会在时光的沉淀与一次次的经历中，悄然蜕变，向阳生长。</p>
+
+        <h2>反向验证：态度也能改变经历</h2>
+        <p>世间万物，皆有回响，态度亦能反向塑造经历，改写前行的轨迹。曾有同学，天性疏懒，最厌早起，总觉得清晨的时光是煎熬，每日都在闹钟的反复催促中仓促起身，屡屡错过早自习的时光。直到高三的钟声悄然敲响，那份对未来的期许与紧迫感，让他幡然醒悟，决心与惰性决裂。从此，他逼着自己褪去慵懒，每日清晨按时起身，在晨光熹微中背诵单词、诵读课文，纵使初期困意难挡，偶有懈怠，也始终坚守初心。久而久之，早起便成了习惯，昔日的煎熬，渐渐变成了享受，他不仅在晨光中收获了知识，更在坚持中重塑了自我，对早起的态度，也从抵触抗拒，变成了主动坚守，而这份积极的态度，也让他收获了更丰盈的成长经历。</p>
+        <p>而我与语文的羁绊，更是态度改写经历的最好佐证。曾几何时，我视语文为枯燥乏味的桎梏，尤其对文言文，总觉得它与当下生活相隔甚远，毫无用处，心底满是抵触，不愿花费分毫心力去研读，考试成绩也始终不尽人意。后来，当代码的繁琐、数理化的艰深让我身心俱疲，我便试着放下浮躁，沉心研读文言篇章。起初，晦涩的文字如壁垒般难以逾越，那份抵触与煎熬，始终萦绕心头。可随着日复一日的坚持，我渐渐读懂了文言文中的风骨与温情，懂得了那些穿越千年的文字，从来都不是用来应付考试的工具，而是用来抚慰喧嚣尘世中浮躁的心灵，让灵魂得以与千年文脉深情对话的媒介。如今，语文早已成为我生活中的慰藉，那些曾让我抵触的文言篇章，如今皆成了滋养心灵的养分。这份从抵触到热爱的转变，这份态度的重塑，皆源于那段逼着自己坚持的经历，而这份积极的态度，也让我收获了与语文相伴的美好时光。</p>
+
+        <h2>小发现：环境也会悄悄影响态度</h2>
+        <p>我亦渐渐发现，周遭的人与环境，亦如无声的春风，潜移默化地浸润着我们的心境，改变着我们的态度。校园里，浓厚的学习氛围如一束光，照亮着每一位前行者的脚步：许多同学黎明即起，奔赴教室，在晨光中诵读；晚自习结束后，仍不舍离去，在灯火下深耕；课间时分，亦常聚在一起，探讨难题、分享心得，那份笃实与热忱，极具感染力。曾有同学，天性疏懒，学习拖沓，可在这样的氛围浸润下，也渐渐被这份热忱打动，褪去慵懒，主动投身学习，上课不再走神，作业按时完成，对学习的态度，也从敷衍懈怠，渐渐变得积极笃定。环境的力量，无声却有力，它能滋养积极的态度，也能消磨心底的热忱，唯有坚守本心，方能在潜移默化中，收获成长。</p>
+
+        <h2>小感悟：打破消极循环，慢慢成长</h2>
+        <p>成长路上，我们难免会坠入消极的闭环：总觉得自己数学薄弱，便心生畏惧，不愿触碰难题，成绩便愈发不理想，这份挫败感，又让心底的怯懦愈发深重，陷入“越怕越差，越差越怕”的恶性循环。后来我渐渐明白，打破这层桎梏的关键，不在于逃避，而在于正视自己的态度，直面心底的恐惧。当拖延裹挟着我们时，不必一味抱怨自己的懒惰，不妨静下心来，探寻心底的症结：是畏惧困难，还是不自信？唯有看清问题的本质，才能慢慢调整心态，挣脱消极的枷锁，一步步走出困境。</p>
+        <p>闲时回望这些细碎的感悟，没有深奥的哲理，唯有最真实的成长体悟：我们既是经历的亲历者，也是态度的塑造者；既会被过往的经历温柔重塑，也能以积极的态度，去选择、去创造属于自己的美好经历。高中三年，不过是人生长河中的一段浅滩，我们总会遭遇挫折与迷茫，会被一次失败打倒，会因他人的评价动摇，可只要我们能守住本心，调整好心态，将每一次挫折都视为成长的养分，将每一段经历都视为蜕变的契机，慢慢积累，缓缓沉淀，便会在时光的打磨中，愈发自信、愈发从容。</p>
+        <p>说到底，过往的经历，不必成为束缚我们前行的枷锁；消极的态度，亦不必成为阻碍我们成长的壁垒。每个人都有调整心态的勇气，都有改写经历的力量，以积极澄澈的态度，面对每一段过往，接纳每一次经历，那些经历，终将化作成长的勋章，塑造更美好的我们。就如我此刻，闲坐灯下，漫书心底所思，不疾不徐，不慌不忙，在探索中成长，在感悟中前行，便是最好的状态。</p>
+
+        <!-- 互动区 -->
+        <div class="vitality-zone">
+            <h2 class="zone-title">互动</h2>
+            <p class="zone-sub">留下你的想法，一起交流成长呀～</p>
+
+            <!-- 统计栏 + 邮箱卡片 -->
+            <div class="stats-email-wrapper">
+                <div class="stats-bar">
+                    <div class="stats-item"><span class="stats-icon">👁️</span><span>浏览量：<span id="viewCount">0</span></span></div>
+                    <div class="stats-item"><span class="stats-icon">❤️</span><span>点赞数：<span id="likeCount">0</span></span>
+                    <button id="likeButton" class="like-btn">👍 点赞支持</button></div>
+                </div>
+                <div class="email-card">
+                    <span class="email-icon">📬</span>
+                    <span class="email-address" id="emailAddress">联系:3534707965@qq.com</span>
+                    <button class="copy-btn" id="copyEmailBtn">复制</button>
+                </div>
+            </div>
+
+            <!-- 随机语录 -->
+            <div class="random-quote" id="randomQuote">
+                <p id="quoteText"></p>
+                <p class="quote-author" id="quoteAuthor"></p>
+            </div>
+
+            <!-- 投票面板 -->
+            <div class="poll-panel">
+                <h3>你觉得：态度和经历，谁的影响更大？</h3>
+                <div class="poll-options">
+                    <div class="poll-option" data-value="attitude">态度影响更大（心态决定一切）</div>
+                    <div class="poll-option" data-value="experience">经历影响更大（亲身经历才会改变）</div>
+                </div>
+                <button class="poll-btn" id="pollBtn">提交投票</button>
+                <div class="poll-result" id="pollResult">
+                    <div>态度影响更大：<span id="attitudePercent">0%</span></div>
+                    <div class="result-bar"><div class="result-fill" id="attitudeBar"></div></div>
+                    <div>经历影响更大：<span id="experiencePercent">0%</span></div>
+                    <div class="result-bar"><div class="result-fill" id="experienceBar"></div></div>
+                </div>
+            </div>
+
+            <!-- 留言板 -->
+            <div class="message-board">
+                <h3>留言板</h3>
+                <form class="msg-form" id="msgForm">
+                    <textarea class="msg-input" placeholder="说说你的想法吧～（比如你对态度和经历的感悟）" rows="4" required></textarea>
+                    <button type="submit" class="msg-submit">提交留言</button>
+                </form>
+                <div class="msg-list" id="msgList">
+                    <div class="msg-item"><div class="msg-content">我觉得态度很重要！只要心态好，再难的经历也能变成成长的动力～</div><div class="msg-time">2026-04-02 15:30</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-declare">
+            本页代码由 AI 辅助编写 · 纯属个人兴趣学习尝试项目 · 非商业使用<br>
+            分享生活小思考，欢迎交流～<br>
+		March 2026 
+        </div>
+    </div>
+
+    <button class="back2top" id="back2top">↑</button>
+
+    <script>
+        // ========== 基础配置 ==========
+        let fontSize = 1.05;
+        const particleCanvas = document.getElementById('likeParticles');
+        const ctx = particleCanvas.getContext('2d');
+        let particles = [];
+
+        // 初始化画布
+        function resizeCanvas() {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // ========== 加载动画 ==========
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = 0;
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 800);
+        });
+
+        // ========== 鼠标跟随微光 ==========
+        const mouseLight = document.getElementById('mouseLight');
+        window.addEventListener('mousemove', (e) => {
+            mouseLight.style.left = e.clientX + 'px';
+            mouseLight.style.top = e.clientY + 'px';
+        });
+
+        // ========== 滚动渐入动画 ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('p, .quote, .vitality-zone').forEach(el => observer.observe(el));
+
+        // ========== 文章目录生成 ==========
+        const tocList = document.getElementById('tocList');
+        const chapters = document.querySelectorAll('h2');
+        chapters.forEach((chapter, index) => {
+            chapter.id = `chapter${index}`;
+            const li = document.createElement('li');
+            li.className = 'toc-item';
+            li.textContent = chapter.textContent.replace(/^\d+\.\s*/, '');
+            li.addEventListener('click', () => {
+                chapter.scrollIntoView({ behavior: 'smooth' });
+            });
+            tocList.appendChild(li);
+        });
+
+        // 目录高亮
+        window.addEventListener('scroll', () => {
+            let current = '';
+            chapters.forEach((chapter, index) => {
+                const rect = chapter.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    current = `chapter${index}`;
+                }
+            });
+            document.querySelectorAll('.toc-item').forEach((item, index) => {
+                item.classList.remove('active');
+                if (item.textContent === chapters[index].textContent.replace(/^\d+\.\s*/, '') && `chapter${index}` === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // ========== 主题切换 ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('light-mode')) {
+                html.classList.replace('light-mode', 'dark-mode');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.replace('dark-mode', 'light-mode');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 记忆主题
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.classList.replace('light-mode', 'dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        // ========== 字体大小调节 ==========
+        document.getElementById('fontUp').addEventListener('click', () => {
+            if (fontSize < 1.3) {
+                fontSize += 0.05;
+                document.querySelectorAll('p').forEach(p => p.style.fontSize = fontSize + 'rem');
+            }
+        });
+        document.getElementById('fontDown').addEventListener('click', () => {
+            if (fontSize > 0.85) {
+                fontSize -= 0.05;
+                document.querySelectorAll('p').forEach(p => p.style.fontSize = fontSize + 'rem');
+            }
+        });
+
+        // ========== 点赞粒子特效 ==========
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = Math.random() * 6 - 3;
+                this.speedY = Math.random() * 6 - 3;
+                this.color = `hsl(${Math.random() * 30 + 350}, 70%, 70%)`;
+                this.opacity = 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.opacity -= 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            particles = particles.filter(p => p.opacity > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ========== 新增：全局涟漪特效 ==========
+        function createRipple(e) {
+            const button = e.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // 给所有可点击元素添加涟漪
+        document.querySelectorAll('button, .poll-option, .toc-item').forEach(btn => {
+            btn.addEventListener('click', createRipple);
+        });
+
+        // ========== 核心功能（原功能增强） ==========
+        // 浏览量统计
+        let viewCount = localStorage.getItem('blog_viewCount');
+        viewCount = viewCount ? parseInt(viewCount) : 0;
+        if (!sessionStorage.getItem('viewCounted')) {
+            viewCount++;
+            localStorage.setItem('blog_viewCount', viewCount);
+            sessionStorage.setItem('viewCounted', 'true');
+        }
+        document.getElementById('viewCount').innerText = viewCount;
+
+        // 点赞功能
+        let likeCount = localStorage.getItem('blog_likeCount') || 0;
+        const hasLiked = localStorage.getItem('blog_hasLiked') === 'true';
+        const likeButton = document.getElementById('likeButton');
+        const likeCountSpan = document.getElementById('likeCount');
+        likeCountSpan.innerText = likeCount;
+
+        if (hasLiked) {
+            likeButton.disabled = true;
+            likeButton.textContent = '❤️ 已点赞';
+        }
+
+        likeButton.addEventListener('click', (e) => {
+            if (hasLiked) return;
+            createParticles(e.clientX, e.clientY);
+            likeCount++;
+            localStorage.setItem('blog_likeCount', likeCount);
+            localStorage.setItem('blog_hasLiked', 'true');
+            likeCountSpan.innerText = likeCount;
+            likeButton.disabled = true;
+            likeButton.textContent = '❤️ 已点赞';
+            likeButton.style.transform = 'scale(0.96)';
+            setTimeout(() => likeButton.style.transform = '', 150);
+        });
+
+        // 复制邮箱（动效增强）
+        const copyBtn = document.getElementById('copyEmailBtn');
+        const emailSpan = document.getElementById('emailAddress');
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(emailSpan.innerText).then(() => {
+                const original = copyBtn.innerText;
+                copyBtn.innerText = '✓ 已复制';
+                copyBtn.style.background = '#4CAF50';
+                copyBtn.style.color = 'white';
+                setTimeout(() => {
+                    copyBtn.innerText = original;
+                    copyBtn.style.background = '';
+                    copyBtn.style.color = '';
+                }, 1500);
+            });
+        });
+
+        // 阅读进度条 & 返回顶部
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+            
+            const back2top = document.getElementById('back2top');
+            back2top.classList.toggle('active', winScroll > 300);
+        });
+
+        document.getElementById('back2top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 投票系统
+        let pollData = { attitude: 0, experience: 0, total: 0 };
+        const pollOptions = document.querySelectorAll('.poll-option');
+        const pollBtn = document.getElementById('pollBtn');
+        const pollResultDiv = document.getElementById('pollResult');
+        const savedPoll = localStorage.getItem('blog_pollData');
+
+        if (savedPoll) {
+            pollData = JSON.parse(savedPoll);
+            showPollResults();
+            pollBtn.disabled = true;
+            pollBtn.textContent = '已投票，感谢参与！';
+        }
+
+
+        function showPollResults() {
+            const aPct = pollData.total ? Math.round((pollData.attitude/pollData.total)*100) : 0;
+            const ePct = pollData.total ? Math.round((pollData.experience/pollData.total)*100) : 0;
+            pollResultDiv.style.display = 'block';
+            document.getElementById('attitudeBar').style.width = aPct + '%';
+            document.getElementById('experienceBar').style.width = ePct + '%';
+            document.getElementById('attitudePercent').textContent = aPct + '%';
+            document.getElementById('experiencePercent').textContent = ePct + '%';
+        }
+
+        pollOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                pollOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+            });
+        });
+
+        pollBtn.addEventListener('click', () => {
+            const selected = document.querySelector('.poll-option.selected');
+            if (!selected) return alert('请选择一个选项哦～');
+            pollData[selected.dataset.value]++;
+            pollData.total++;
+            localStorage.setItem('blog_pollData', JSON.stringify(pollData));
+            showPollResults();
+            pollBtn.disabled = true;
+            pollBtn.textContent = '已投票，感谢参与！';
+        });
+
+        // 留言板（增强动画）
+        let messages = [];
+        const savedMessages = localStorage.getItem('blog_messages');
+        const msgList = document.getElementById('msgList');
+        const msgForm = document.getElementById('msgForm');
+        const msgInput = document.querySelector('.msg-input');
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+        }
+
+        function addMessageToDOM(content, time, save = true) {
+            const msgItem = document.createElement('div');
+            msgItem.className = 'msg-item';
+            msgItem.innerHTML = `<div class="msg-content">${escapeHtml(content)}</div><div class="msg-time">${time}</div>`;
+            msgList.insertBefore(msgItem, msgList.firstChild);
+            setTimeout(() => msgItem.classList.add('show'), 10);
+            
+            if (save) {
+                messages.unshift({content, time});
+                messages = messages.slice(0,50);
+                localStorage.setItem('blog_messages', JSON.stringify(messages));
+            }
+        }
+
+        if (savedMessages) {
+            messages = JSON.parse(savedMessages);
+            messages.slice().reverse().forEach(msg => addMessageToDOM(msg.content, msg.time, false));
+        }
+
+        msgForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const content = msgInput.value.trim();
+            if (!content) return alert('请输入留言内容哦～');
+            const now = new Date();
+            const time = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+            addMessageToDOM(content, time);
+            msgInput.value = '';
+        });
+
+        // 打字机语录
+        const quotes = [
+            { content: '态度不是天生的，经历也不是固定的，我们既能被经历温柔改变，也能凭着态度，把普通的经历，过成自己喜欢的样子。', author: '—— 闲时碎碎念' },
+            { content: '遇事不决，那是因为现在的态度带着过往经历的印记，所以会犹豫会恐惧，但当调整好心态那么往后的经历将会与理想中的画面离不了多远。', author: '—— 匿名同学' },
+            { content: '成长就是，在经历中调整态度，在态度中收获更好的经历。', author: '—— 闲时碎碎念' },
+            { content: '后来你会发现：“怕什么来什么”就是因为“有你怕什么的态度，所以有来什么的经历”。', author: '—— 匿名同学' }
+        ];
+
+        const quoteText = document.getElementById('quoteText');
+        const quoteAuthor = document.getElementById('quoteAuthor');
+        
+        function typeWriter(text, i = 0) {
+            if (i < text.length) {
+                quoteText.textContent += text.charAt(i);
+                setTimeout(() => typeWriter(text, i + 1), 50);
+            }
+        }
+
+        function changeQuote() {
+            quoteText.textContent = '';
+            const q = quotes[Math.floor(Math.random() * quotes.length)];
+            typeWriter(q.content);
+            quoteAuthor.textContent = q.author;
+        }
+
+        window.addEventListener('load', changeQuote);
+        setInterval(changeQuote, 30000);
+    </script>
+</body>
+</html>
